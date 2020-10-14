@@ -3,7 +3,9 @@ package com.circularuins.mvvmcleanarchitecture2020.app
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import com.circularuins.mvvmcleanarchitecture2020.R
+import com.circularuins.mvvmcleanarchitecture2020.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +13,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(
+            this, R.layout.activity_main
+        )
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
     }
 
     override fun onResume() {

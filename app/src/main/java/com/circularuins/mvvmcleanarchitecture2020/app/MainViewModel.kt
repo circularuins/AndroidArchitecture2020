@@ -21,11 +21,16 @@ class MainViewModel : ViewModel() {
     }
 
     private val _masterData = MutableLiveData<List<Master>>()
+    private val _progress = MutableLiveData<Boolean>(false)
+
     val masterData: LiveData<List<Master>> = _masterData;
+    val progress: LiveData<Boolean> = _progress
 
     fun initTab() {
         viewModelScope.launch {
+            // TODO: Result型に書き換える
             try {
+                _progress.postValue(true)
                 val master = repository.getMaster()
                 _masterData.postValue(master)
             } catch (e: IOException) {
@@ -34,6 +39,8 @@ class MainViewModel : ViewModel() {
                 Log.d("HTTPExample", "[API Error] code: ${e.code()}, message:: ${e.message}")
             } catch (e: Exception) {
                 Log.d("HTTPExample", "[Unknown Error] message: ${e.message}")
+            } finally {
+                _progress.postValue(false)
             }
         }
     }
