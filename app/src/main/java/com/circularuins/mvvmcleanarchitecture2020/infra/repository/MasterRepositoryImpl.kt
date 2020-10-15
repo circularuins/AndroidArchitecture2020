@@ -3,6 +3,7 @@ package com.circularuins.mvvmcleanarchitecture2020.infra.repository
 import com.circularuins.mvvmcleanarchitecture2020.domain.model.Master
 import com.circularuins.mvvmcleanarchitecture2020.domain.repository.MasterRepository
 import com.circularuins.mvvmcleanarchitecture2020.infra.ApiService
+import com.circularuins.mvvmcleanarchitecture2020.infra.convert
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
@@ -26,5 +27,6 @@ class MasterRepositoryImpl : MasterRepository {
         retrofit.create(ApiService::class.java)
     }
 
-    override suspend fun getMaster(): List<Master> = service.getMaster()
+    override suspend fun getMaster(): List<Master> =
+        service.getMaster().map { master -> master.convert() }
 }

@@ -1,4 +1,4 @@
-package com.circularuins.mvvmcleanarchitecture2020.domain.model
+package com.circularuins.mvvmcleanarchitecture2020.infra.schema
 
 import com.squareup.moshi.Json
 

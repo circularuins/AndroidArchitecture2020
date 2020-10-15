@@ -1,7 +1,7 @@
 package com.circularuins.mvvmcleanarchitecture2020.infra
 
-import com.circularuins.mvvmcleanarchitecture2020.domain.model.Item
-import com.circularuins.mvvmcleanarchitecture2020.domain.model.Master
+import com.circularuins.mvvmcleanarchitecture2020.infra.schema.Item
+import com.circularuins.mvvmcleanarchitecture2020.infra.schema.Master
 import retrofit2.http.GET
 import retrofit2.http.Path
 
