@@ -30,9 +30,10 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             // TODO: Result型に書き換える
             try {
-                _progress.postValue(true)
+                _progress.value = true
+
                 val master = repository.getMaster()
-                _masterData.postValue(master)
+                _masterData.value = master
             } catch (e: IOException) {
                 Log.d("HTTPExample", "[NetWork Error] message: ${e.message}")
             } catch (e: HttpException) {
@@ -40,7 +41,7 @@ class MainViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.d("HTTPExample", "[Unknown Error] message: ${e.message}")
             } finally {
-                _progress.postValue(false)
+                _progress.value = false
             }
         }
     }

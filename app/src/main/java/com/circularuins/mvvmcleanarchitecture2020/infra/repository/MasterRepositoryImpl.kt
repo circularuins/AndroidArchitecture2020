@@ -6,6 +6,8 @@ import com.circularuins.mvvmcleanarchitecture2020.infra.ApiService
 import com.circularuins.mvvmcleanarchitecture2020.infra.convert
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -27,6 +29,7 @@ class MasterRepositoryImpl : MasterRepository {
         retrofit.create(ApiService::class.java)
     }
 
-    override suspend fun getMaster(): List<Master> =
+    override suspend fun getMaster(): List<Master> = withContext(Dispatchers.IO) {
         service.getMaster().map { master -> master.convert() }
+    }
 }
