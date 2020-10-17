@@ -28,7 +28,10 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             _progress.value = true
             when (val master = repository.getMaster()) {
-                is Result.Success -> _masterData.value = master.data
+                is Result.Success -> {
+                    _masterData.value = master.data
+                    Log.d("MasterData", "${master.data.size}件のデータ取得")
+                }
                 is Result.Error -> Log.d("MasterError", master.message)
             }
             _progress.value = false
