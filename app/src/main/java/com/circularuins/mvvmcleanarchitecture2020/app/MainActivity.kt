@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.circularuins.mvvmcleanarchitecture2020.R
 import com.circularuins.mvvmcleanarchitecture2020.databinding.ActivityMainBinding
+import com.circularuins.mvvmcleanarchitecture2020.domain.model.Master
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -32,11 +33,14 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         ViewCompat.setElevation(toolbar, 10f)
 
-        // FIXME: マスターデータ更新後に生成するようにする
-        view_pager.adapter = FragmentPagerAdapter(this)
-        TabLayoutMediator(tab_layout, view_pager) { tab, posirion ->
-            tab.text = "あいうえお"
-        }.attach()
+        viewModel.masterData.observe(this, { master ->
+            view_pager.adapter = FragmentPagerAdapter(this, master)
+            TabLayoutMediator(tab_layout, view_pager) { tab, position ->
+                tab.text = master[position].name
+            }.attach()
+        })
+
+
     }
 
     override fun onResume() {
@@ -44,8 +48,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.initTab()
     }
 
-    private inner class FragmentPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = 5
+    private inner class FragmentPagerAdapter(fa: FragmentActivity, val master: List<Master>) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = master.size
 
         override fun createFragment(position: Int): Fragment = ItemListFragment()
     }
