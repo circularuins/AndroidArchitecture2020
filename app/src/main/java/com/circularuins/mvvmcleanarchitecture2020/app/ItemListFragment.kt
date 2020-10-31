@@ -9,6 +9,26 @@ import com.circularuins.mvvmcleanarchitecture2020.R
 
 class ItemListFragment : Fragment() {
 
+    private lateinit var requestType: String
+
+    companion object {
+        private const val REQUEST_TYPE = "request_type"
+
+        fun newInstance(requestType: String): ItemListFragment {
+            val fragment = ItemListFragment()
+            fragment.arguments = Bundle().apply {
+                putString(REQUEST_TYPE, requestType)
+            }
+            return fragment
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        requestType = arguments?.getString(REQUEST_TYPE, "") ?: ""
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

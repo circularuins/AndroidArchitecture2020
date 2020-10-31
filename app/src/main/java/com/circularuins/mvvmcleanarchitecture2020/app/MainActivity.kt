@@ -51,6 +51,6 @@ class MainActivity : AppCompatActivity() {
     private inner class FragmentPagerAdapter(fa: FragmentActivity, val master: List<Master>) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = master.size
 
-        override fun createFragment(position: Int): Fragment = ItemListFragment()
+        override fun createFragment(position: Int): Fragment = ItemListFragment.newInstance(master[position].requestType)
     }
 }
